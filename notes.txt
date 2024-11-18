@@ -1,0 +1,44 @@
+npm init -y
+
+npm install express body-parser
+npm install --save-dev typescript tsoa @types/express ts-node nodemon
+
+npx tsc --init
+
+tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
+
+tsoa.json
+{
+    "entryFile": "src/index.ts",
+    "controllerPathGlobs": ["src/controllers/**/*.ts"],
+    "noImplicitAdditionalProperties": "throw",
+    "spec": {
+      "outputDirectory": "src/swagger",
+      "specVersion": 3
+    },
+    "routes": {
+      "routesDir": "src/routes"
+    }
+}
+
+package.json
+"scripts": {
+  "start": "node dist/index.js",
+  "dev": "nodemon src/index.ts",
+  "build": "tsc",
+  "tsoa:routes": "tsoa routes",
+  "tsoa:spec": "tsoa spec"
+}
+
